@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VigilAI | Drowsiness Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="#">
+                <div class="brand-icon">V</div>
+                <div>
+                    <span class="brand-name">VigilAI</span>
+                    <span class="brand-caption">SAFETY INTELLIGENCE</span>
+                </div>
+            </a>
+
+            <div class="nav-label">WORKSPACE</div>
+            <a class="nav-item active" href="#">
+                <span class="nav-icon">◉</span> Live Monitoring
+            </a>
+            <a class="nav-item" href="#system-status">
+                <span class="nav-icon">⌁</span> System Status
+            </a>
+
+            <div class="sidebar-bottom">
+                <div class="secure-badge">
+                    <span class="secure-dot"></span>
+                    <div>
+                        <strong>Local Camera</strong>
+                        <p>Permission required</p>
+                    </div>
+                </div>
+                <p class="sidebar-version">AI DROWSINESS DETECTION<br>PROJECT DEMO · V1.0</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">INTELLIGENT DRIVER SAFETY</p>
+                    <h1>Live Monitoring</h1>
+                </div>
+                <div class="topbar-right">
+                    <span class="system-pill"><span class="status-dot"></span> System Ready</span>
+                    <div class="avatar">AI</div>
+                </div>
+            </header>
+
+            <section class="welcome-row">
+                <div>
+                    <h2>Stay alert. Stay safe.</h2>
+                    <p>Real-time drowsiness monitoring powered by your trained AI model.</p>
+                </div>
+                <div class="live-label"><span class="pulse-dot"></span> LIVE SESSION</div>
+            </section>
+
+            <section class="dashboard-grid">
+                <div class="camera-card">
+                    <div class="card-heading">
+                        <div>
+                            <span class="section-kicker">CAMERA FEED</span>
+                            <h3>Live Camera</h3>
+                        </div>
+                        <span id="cameraBadge" class="camera-badge">OFFLINE</span>
+                    </div>
+
+                    <div class="camera-stage">
+                        <div class="camera-placeholder" id="cameraPlaceholder">
+                            <div class="camera-graphic">
+                                <svg viewBox="0 0 64 64" width="42" height="42" fill="none" aria-hidden="true">
+                                    <rect x="8" y="17" width="35" height="30" rx="7" stroke="currentColor" stroke-width="2.5"/>
+                                    <path d="M43 27L56 20V44L43 37" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                                    <circle cx="25" cy="32" r="7" stroke="currentColor" stroke-width="2.5"/>
+                                </svg>
+                            </div>
+                            <h4>Your camera feed appears here</h4>
+                            <p>Start the camera to begin your monitoring session.</p>
+                        </div>
+
+                        <video id="camera" autoplay playsinline muted></video>
+
+                        <div class="camera-overlay">
+                            <span class="feed-tag"><span class="feed-dot"></span> CAMERA FEED</span>
+                            <span class="corner-mark top-left"></span>
+                            <span class="corner-mark top-right"></span>
+                            <span class="corner-mark bottom-left"></span>
+                            <span class="corner-mark bottom-right"></span>
+                        </div>
+                    </div>
+
+                    <div class="camera-footer">
+                        <div class="camera-info">
+                            <span class="mini-indicator"></span>
+                            <span id="cameraMessage">Camera access not started</span>
+                        </div>
+                        <div class="camera-actions">
+                            <button id="stopCamera" class="button button-secondary" disabled>Stop</button>
+                            <button id="startCamera" class="button button-primary">
+                                <span>▶</span> Start Camera
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insights-column">
+                    <div class="status-card">
+                        <div class="card-heading">
+                            <div>
+                                <span class="section-kicker">AI ANALYSIS</span>
+                                <h3>Alertness Status</h3>
+                            </div>
+                            <span class="status-symbol">✳</span>
+                        </div>
+
+                        <div id="statusVisual" class="status-visual">
+                            <div class="status-ring">
+                                <svg viewBox="0 0 80 80" width="64" height="64" fill="none" aria-hidden="true">
+                                    <path d="M10 40C18 26 28 20 40 20C52 20 62 26 70 40C62 54 52 60 40 60C28 60 18 54 10 40Z" stroke="currentColor" stroke-width="3"/>
+                                    <circle cx="40" cy="40" r="10" stroke="currentColor" stroke-width="3"/>
+                                    <circle cx="40" cy="40" r="4" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <span class="status-overline">CURRENT STATE</span>
+                            <h2 id="status">Awaiting Camera</h2>
+                            <p id="statusDescription">Start the camera to begin AI monitoring.</p>
+                        </div>
+
+                        <div class="status-divider"></div>
+                        <div class="metric-row">
+                            <span>Detection engine</span>
+                            <strong id="modelStatus">Ready to connect</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Monitoring mode</span>
+                            <strong>Live camera</strong>
+                        </div>
+                    </div>
+
+                    <div class="alarm-card" id="system-status">
+                        <div class="alarm-icon">♫</div>
+                        <div class="alarm-content">
+                            <span class="section-kicker">SAFETY ALERT</span>
+                            <h3>Audio Alarm</h3>
+                            <p id="alarmStatus">Alarm is on standby.</p>
+                        </div>
+                        <span id="alarmIndicator" class="alarm-indicator">STANDBY</span>
+                    </div>
+
+                    <div class="info-card">
+                        <span class="info-icon">ⓘ</span>
+                        <p><strong>How it works</strong><br>AI predictions will be analyzed to detect sustained drowsiness and trigger an audible alert.</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <span>VigilAI <span class="footer-separator">/</span> AI-Based Drowsiness Detection</span>
+                <span>Prototype for demonstration · Not a substitute for safe driving practices</span>
+            </footer>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+</body>
+</html>

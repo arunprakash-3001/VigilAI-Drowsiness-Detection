@@ -1,0 +1,4 @@
+
+flask
+inference-sdk
+python-dotenv
